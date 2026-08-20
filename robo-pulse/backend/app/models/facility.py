@@ -30,5 +30,3 @@ class Facility:
                 return facility
 
         return None
-
-    

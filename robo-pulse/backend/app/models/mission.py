@@ -32,5 +32,5 @@ class Mission:
         return None
 
     def __repr__(self) -> str:
-        return(f"Mission(id={self.id}, title={self.title!r}, priority={self.priority.value}, status={self.status.value})")
+        return(f"Mission(id={self.mission_id}, title={self.title!r}, priority={self.priority.value}, status={self.status.value})")
     
