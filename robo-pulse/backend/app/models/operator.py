@@ -4,7 +4,7 @@ class Operator:
     registry: ClassVar[list["Operator"]] = []
 
     def __init__(self, operator_id: int, name: str, facility_id: int): 
-        self.operator_id = operator_id
+        self.id = operator_id
         self.name = name
         self.facility_id = facility_id
         Operator.registry.append(self)
@@ -15,7 +15,7 @@ class Operator:
     @classmethod
     def find_by_id(cls, operator_id: int) -> "Operator | None":
         for operator in Operator.registry: 
-            if operator.operator_id == operator_id:
+            if operator.id == operator_id:
                 return operator
 
         return None
