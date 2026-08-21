@@ -1,3 +1,32 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING
+from sqlalchemy import ForeignKey, Integer, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from .base import Base
+
+if TYPE_CHECKING:
+    from .facility import Facility
+    from .mission import Mission
+
+class Operator(Base):
+    __tablename__ = "operators"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(100))
+
+    facility_id: Mapped[int] = mapped_column(Integer, ForeignKey("facilities.id"))
+    facility: Mapped["Facility"] = relationship(back_populates="operators")
+    missions: Mapped[list["Mission"]] = relationship(back_populates="operator")
+
+    def __repr__(self) -> str:
+            return(f"Operator(operator_id={self.operator_id}, name={self.name!r}, facility_id={self.facility_id})")
+
+
+
+
+
+
+'''
 from typing import ClassVar
 
 class Operator: 
@@ -19,3 +48,4 @@ class Operator:
                 return operator
 
         return None
+'''

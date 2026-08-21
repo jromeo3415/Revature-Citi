@@ -1,6 +1,40 @@
 '''
-Diagnostic log model - Day 1
+Diagnostic Log Model - Day 3 ORM incorporation
 '''
+
+from __future__ import annotations
+from typing import TYPE_CHECKING
+from datetime import datetime
+from sqlalchemy import ForeignKey, Integer, Text, DateTime, func
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from .base import Base
+
+if TYPE_CHECKING:
+    from .mission import Mission
+
+class DiagnosticLog(Base):
+    __tablename__ = "diagnostic_logs"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    mission_id: Mapped[int] = mapped_column(Integer, ForeignKey("missions.id"))
+    file_url: Mapped[str] = mapped_column(Text)
+    notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
+    mission: Mapped["Mission"] = relationship(back_populates="diagnostic_logs")
+
+    def __repr__(self) -> str:
+        return(f"DiagnosticLog(id={self.id}, mission_id={self.mission_id}, file_url={self.file_url!r})")
+    
+
+
+
+
+
+
+
+'''
+Diagnostic log model - Day 1
+
 
 from datetime import datetime
 from typing import ClassVar
@@ -19,4 +53,4 @@ class DiagnosticLog:
     def __repr__(self) -> str:
         return(f"DiagnosticLog(id={self.id}, mission_id={self.mission_id}, file_url={self.file_url!r})")
 
-    
+'''
