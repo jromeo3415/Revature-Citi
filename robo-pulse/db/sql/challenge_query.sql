@@ -1,0 +1,1 @@
+SELECT missions.id AS mission_id, title, robots.id AS robot_id, operators.id AS operator_id, robots.facility_id AS robot_facility, operators.facility_id AS operator_facility FROM missions JOIN robots ON missions.robot_id = robots.id JOIN operators ON missions.operator_id = operators.id WHERE robots.facility_id != operators.facility_id;
