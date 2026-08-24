@@ -3,7 +3,7 @@ Day 4 - FastAPI application entrypoint
 '''
 
 from fastapi import FastAPI
-from app.routers import robots
+from app.routers import robots, missions
 
 app = FastAPI(
     title="RoboPulse Fleet Command Center",
@@ -12,6 +12,8 @@ app = FastAPI(
 )
 
 app.include_router(robots.router)
+app.include_router(missions.router )
+
 
 # sample health endpoint to verify application is running correctly
 @app.get("/health", tags=["health"])

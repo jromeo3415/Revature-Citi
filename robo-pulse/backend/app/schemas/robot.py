@@ -16,8 +16,6 @@ class RobotBase(BaseModel):
 class RobotCreate(RobotBase):
     pass
 
-
-
 class RobotRead(RobotBase):
     id: int
     model_config = ConfigDict(from_attributes=True)

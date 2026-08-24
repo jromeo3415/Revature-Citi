@@ -16,11 +16,12 @@ GET robots?max_battery=20 -> gets all robots where max bettry is 20
 from decimal import Decimal
 
 from fastapi import APIRouter, Depends, HTTPException, status, Query
-from app.schemas.robot import RobotCreate, RobotRead
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.dependencies import get_db
 from app.models.robot import Robot
+from app.schemas.robot import RobotCreate, RobotRead
 from app.models.enums import RobotStatus
 
 router = APIRouter(prefix="/robots", tags=["robots"])
