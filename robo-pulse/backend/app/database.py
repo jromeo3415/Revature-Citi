@@ -15,7 +15,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 
 DATABASE_URL = os.environ.get(
     "DATABASE_URL", 
-    "postgresql+asyncpg://postgres:2304@localhost:5432/robopulse_dev_2478",
+    "postgresql+asyncpg://joe:1234@localhost:5432/robopulse_dev",
 )
 
 engine = create_async_engine(DATABASE_URL, echo=True)
