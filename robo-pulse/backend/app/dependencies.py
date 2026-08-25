@@ -21,11 +21,11 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
 
 # create a dependency that will extract the current user from the JWT token
 # which is provided in the auth header of the request
-oauth2_scheme = OAuth2PasswordBearer(tokenURL="auth/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 
 async def get_current_user(
         token: str = Depends(oauth2_scheme),
-        db: AsyncSession = Depends(get_db()),
+        db: AsyncSession = Depends(get_db),
     ) -> User: 
 
     # we will use the decode_access_token function to decode the JWT token 

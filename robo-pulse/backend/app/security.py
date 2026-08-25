@@ -28,7 +28,7 @@ def hash_password(plain_password: str) -> str:
 # takes a hashed password and a plain text password as input and 
 # checks if the plain text password matches the hashed password
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return bcrypt.checkpw(plain_password.encode("utf-8", hashed_password.encode("utf-8")))
+    return bcrypt.checkpw(plain_password.encode("utf-8"), hashed_password.encode("utf-8"))
 
 # creates a JWT access token with the provided data and an 
 # optional expiration time
@@ -46,4 +46,4 @@ def create_access_token(data: dict, exprires_delta: timedelta | None = None) -> 
 
 # decodes a JWT access token and returns the payload as a dictionary
 def decode_access_token(token: str) -> dict:
-    return jwt.decode(token, SECRET_KEY, algorithm=[ALGORITHM])
+    return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])

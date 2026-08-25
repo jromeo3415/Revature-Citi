@@ -1,4 +1,6 @@
 '''
+Day 5 Updated to utilize RBAC
+
 Day 4 - Robot Endpoints
 
 Common pattern for REST endpoints: 
@@ -12,17 +14,17 @@ Query parameter
 GET robots?max_battery=20 -> gets all robots where max bettry is 20
 '''
 
-
 from decimal import Decimal
-
 from fastapi import APIRouter, Depends, HTTPException, status, Query
-
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.dependencies import get_db
+
+from app.dependencies import get_db, get_current_user, require_role
 from app.models.robot import Robot
+from app.models.user import User
 from app.schemas.robot import RobotCreate, RobotRead
-from app.models.enums import RobotStatus
+from app.models.enums import RobotStatus, UserRole
+from app.schemas.robot import RobotCreate, RobotRead
 
 router = APIRouter(prefix="/robots", tags=["robots"])
 
@@ -33,7 +35,8 @@ async def list_robots(max_battery: Decimal | None = Query(
                         le = 100,
                         description = "Only return robots strictly below this battery percentage"
                     ), 
-                    db: AsyncSession = Depends(get_db)):
+                    db: AsyncSession = Depends(get_db),
+                    _: User = Depends(get_current_user)) -> list[Robot]:
 
     statement = select(Robot).where(Robot.status != RobotStatus.OFFLINE)
 
@@ -46,7 +49,7 @@ async def list_robots(max_battery: Decimal | None = Query(
     return list(result.scalars().all())
 
 @router.get("/{robot_id}", response_model = RobotRead)
-async def get_robot(robot_id: int, db: AsyncSession = Depends(get_db)) -> Robot:
+async def get_robot(robot_id: int, db: AsyncSession = Depends(get_db), _: User = Depends(get_current_user)) -> Robot:
     robot = await db.get(Robot, robot_id)
 
     if robot is None: 
@@ -58,7 +61,7 @@ async def get_robot(robot_id: int, db: AsyncSession = Depends(get_db)) -> Robot:
     return robot
 
 @router.post("", response_model=RobotRead, status_code=status.HTTP_201_CREATED)
-async def create_robot(payload: RobotCreate, db: AsyncSession = Depends(get_db)):
+async def create_robot(payload: RobotCreate, db: AsyncSession = Depends(get_db), _: User = Depends(require_role(UserRole.FLEET_ADMIN))):
 
     # Dumps the payload into the Robot constructor
     # ** is the unpackaging operator which takes all the attributes and puts them inside the construcor to make a new object

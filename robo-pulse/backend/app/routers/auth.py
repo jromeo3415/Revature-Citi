@@ -15,10 +15,10 @@ from app.security import create_access_token, hash_password, verify_password
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
-@router.post("/token", repsonse_model=Token)
+@router.post("/token", response_model=Token)
 async def login(
                     form_data: OAuth2PasswordRequestForm = Depends(),
-                    db: AsyncSession = Depends(get_db())
+                    db: AsyncSession = Depends(get_db)
                 ) -> Token:
     result = await db.execute(select(User).where(User.username == form_data.username))
     user = result.scalar_one_or_none()
@@ -34,14 +34,19 @@ async def login(
     # set our access token
     access_token = create_access_token(data={"sub": user.username, "role": user.role.value})
 
-    return Token(access_token=access_token, token_type="bearer")
+    return Token(
+        username=user.username,
+        role=user.role,
+        access_token=access_token,
+        token_type="bearer",
+    )
 
 # function to register a new user. This endpoint is protected by the require_role dependancy
 # which will require the user to have the Fleet Admin role
 @router.post("/register", response_model=UserRead, status_code=status.HTTP_201_CREATED)
 async def register_user(
                             payload: UserCreate,
-                            db: AsyncSession = Depends(get_db()),
+                            db: AsyncSession = Depends(get_db),
                             _: User = Depends(require_role(UserRole.FLEET_ADMIN))
                         ) -> User:
     existing = await db.execute(select(User).where(User.username == payload.username))

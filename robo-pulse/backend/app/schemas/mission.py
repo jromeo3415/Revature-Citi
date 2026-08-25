@@ -4,9 +4,9 @@ Day 4 Phase B Student Challenge
 
 from pydantic import Field, BaseModel, ConfigDict
 
-from app.models.enums import MissionPriority, MissionStatus
+from app.models.enums import MissionStatus, MissionPriority
 
-'''
+
 class MissionBase(BaseModel):
     title: str = Field(min_length=1, max_length=150)
     priority: MissionPriority 
@@ -20,10 +20,12 @@ class MissionRead(MissionBase):
 
 class MissionCreate(MissionBase):
     pass
-'''
 
 class DiscrepancyRead(BaseModel):
     id: int
     title: str = Field(min_length=1, max_length=150)
     robot_facility_id: int
     operator_facility_id: int
+
+class MissionStatusUpdate(BaseModel):
+    status: MissionStatus
