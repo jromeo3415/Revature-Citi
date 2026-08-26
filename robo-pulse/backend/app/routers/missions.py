@@ -29,7 +29,7 @@ async def get_discrepancies(priority: MissionPriority | None = Query(
     return list(result.mappings().all())
 
 @router.patch("/{mission_id}/status", response_model=MissionRead)
-async def get_mission_status(mission_id: int, payload: MissionStatusUpdate, db: AsyncSession = Depends(get_db), _: User = Depends(require_role(UserRole.FLEET_ADMIN, UserRole.FIELD_OPERATOR))) -> MissionStatus:
+async def get_mission_status(mission_id: int, payload: MissionStatusUpdate, db: AsyncSession = Depends(get_db), _: User = Depends(require_role(UserRole.FLEET_ADMIN, UserRole.FIELD_OPERATOR))) -> Mission:
     mission = await db.get(Mission, mission_id)
 
     if mission is None:
