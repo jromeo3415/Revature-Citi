@@ -13,8 +13,8 @@ class Operator(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(100))
-
     facility_id: Mapped[int] = mapped_column(Integer, ForeignKey("facilities.id"))
+
     facility: Mapped["Facility"] = relationship(back_populates="operators")
     missions: Mapped[list["Mission"]] = relationship(back_populates="operator")
 

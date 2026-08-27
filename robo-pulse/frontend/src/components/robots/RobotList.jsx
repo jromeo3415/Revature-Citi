@@ -3,7 +3,7 @@ import RobotCard from "./RobotCard";
 
 function RobotList({robots}) {
     return (
-        <Grid container spacing = {2} direction={"row"}>
+        <Grid container spacing = {2} direction={"row"} sx={{justifyContent: "center"}}>
             
             {/**
              * The map function is used to iterate over the 'robots' array and render
