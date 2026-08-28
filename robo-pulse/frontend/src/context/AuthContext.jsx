@@ -28,7 +28,7 @@ export function AuthProvider({children}) {
 
     // Decode the JWT into a user object and cache the results and prevent redecoding the token
     // on every re-render. This only runs when the token actually changes.
-    const user = useMemo(() => (token ? decodeToken(token): null), [token]);
+    const user = useMemo(() => (token ? decodeToken(token) : null), [token]);
 
     // Authenticates the user credentials against the backend API by sending credentials,
     // saving the returned token token to localStorage and updates the React state

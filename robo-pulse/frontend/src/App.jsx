@@ -49,7 +49,7 @@ function AppContent() {
 }
 
 
-// not acts as a root application component that wraps the entire app in the AuthProvider context
+// now acts as a root application component that wraps the entire app in the AuthProvider context
 function App(){
     return (
     <AuthProvider>

@@ -41,10 +41,6 @@ function DiscrepancyDataGrid() {
         }
     }, []);
 
-    if (loading) return <CircularProgress />
-
-    if (error) return <Alert severity="error">{error}</Alert>
-
     return (
         <Box sx ={{height: 400, width: '100%'}}>
             <FormControl size="small" sx={{ mb: 2, minWidth: 180}}>

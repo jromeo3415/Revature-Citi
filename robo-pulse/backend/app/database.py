@@ -18,6 +18,6 @@ DATABASE_URL = os.environ.get(
     "postgresql+asyncpg://joe:1234@localhost:5432/robopulse_dev",
 )
 
-engine = create_async_engine(DATABASE_URL, echo=True)
+engine = create_async_engine(DATABASE_URL)
 
 AsyncSessionLocal = async_sessionmaker(engine, expire_on_commit=False)
