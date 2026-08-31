@@ -18,7 +18,7 @@ async def find_low_battery_robots(session, threshold: int = 20) -> list[Robot]:
         .where(Robot.status != RobotStatus.OFFLINE, Robot.battery_level < threshold)
         .order_by(Robot.id)
     )
-    result = await session.execute(statement)
+    result = awarobo-pulse/frontendit session.execute(statement)
 
     return list(result.scalars().all())
 

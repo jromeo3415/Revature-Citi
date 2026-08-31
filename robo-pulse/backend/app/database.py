@@ -11,12 +11,12 @@ a Pydantic settigns class in the future
 '''
 
 import os 
+from dotenv import load_dotenv
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
-DATABASE_URL = os.environ.get(
-    "DATABASE_URL", 
-    "postgresql+asyncpg://joe:1234@localhost:5432/robopulse_dev",
-)
+load_dotenv()
+
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 engine = create_async_engine(DATABASE_URL)
 
