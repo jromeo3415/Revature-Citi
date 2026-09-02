@@ -1,4 +1,5 @@
-import { Container, Typography, Box } from "@mui/material";
+import { Container, Typography, Box, Snackbar, Alert } from "@mui/material";
+import { useState } from "react";
 import AppHeader from "./components/layout/AppHeader";
 import LoginForm from "./components/auth/LoginForm";
 import RobotDataGrid from "./components/robots/RobotDataGrid";
@@ -11,6 +12,7 @@ function Dashboard() {
     
     // stores the current user object and the logout function from the global auth context
     const{user, logout} = useAuth()
+    const[notification, setNotification] = useState(null)
 
     return (
         <>
@@ -24,7 +26,7 @@ function Dashboard() {
             </Typography>
 
             <Box sx={{ mb: 4 }}>
-                <RobotDataGrid />
+                <RobotDataGrid onSuccess={setNotification} />
             </Box>
 
             <Typography variant="h5" component="h2" gutterBottom>
@@ -36,6 +38,13 @@ function Dashboard() {
             </Box>
 
         </Container>
+
+        <Snackbar
+            open={Boolean(notification)}
+            autoHideDuration={4000}
+            onClose={() => setNotification(null)}>
+                <Alert severity="success" onClose={() => setNotification(null)}>{notification}</Alert>
+            </Snackbar>
         
         </>
     );

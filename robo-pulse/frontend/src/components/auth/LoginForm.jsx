@@ -22,8 +22,13 @@ const handleSubmit = async(event) => {
     
     try {
         await login(username, password);
-    } catch {
-        setError('Incorrect username or password');
+    } catch (err) {
+        if (err.response?.status === 401) {
+            setError('Incorrect username or password');
+        } else {
+            setError('Something went wrong logging in, please try again shortly')
+        }
+        
     }
 };
 

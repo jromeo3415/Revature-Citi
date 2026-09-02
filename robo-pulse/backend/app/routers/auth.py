@@ -5,7 +5,7 @@ Authentication endpoints
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
-from sqlalchemy import select
+from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.dependencies import get_db, require_role
@@ -49,7 +49,7 @@ async def register_user(
                             db: AsyncSession = Depends(get_db),
                             _: User = Depends(require_role(UserRole.FLEET_ADMIN))
                         ) -> User:
-    existing = await db.execute(select(User).where(User.username == payload.username))
+    existing = await db.execute(select(User).where(func.lower(User.username) == func.lower(payload.username)))
 
     if existing.scalar_one_or_none() is not None:
         raise HTTPException(

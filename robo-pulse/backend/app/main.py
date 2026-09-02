@@ -11,11 +11,12 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.exc import IntegrityError
 
+from app.config import settings
 from app.routers import robots, missions, auth
 
-load_dotenv()
+#load_dotenv()
 
-FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN")
+FRONTEND_ORIGIN = settings.frontend_origin #os.getenv("FRONTEND_ORIGIN")
 
 app = FastAPI(
     title="RoboPulse Fleet Command Center",
@@ -28,7 +29,7 @@ app.add_middleware(
     CORSMiddleware, 
 
     # Endpoint for our frontend
-    allow_origins=[FRONTEND_ORIGIN],
+    allow_origins=["*"],
 
     # this allows us to pass an authorization header using JWT
     allow_credentials=True,

@@ -10,7 +10,7 @@ import axios from 'axios';
 const apiClient = axios.create({
 
     // this is our FastAPI endpoint
-    baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000',
+    baseURL: import.meta.env.VITE_API_BASE_URL || 'http://100.68.190.75:8000',
 });
 
 // the request interceptor runs on every outgoing request and checks if 

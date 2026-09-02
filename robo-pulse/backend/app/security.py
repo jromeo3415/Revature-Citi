@@ -9,10 +9,11 @@ import os
 from datetime import datetime, timedelta, timezone
 import bcrypt
 import jwt
+from app.config import settings
 
 # Security constants and helper functions for password hashing and JWT token management
 
-SECRET_KEY = os.environ.get("SECRET_KEY", "<replace-with-a-real-secret-key>")
+SECRET_KEY = settings.secret_key #os.environ.get("SECRET_KEY", "<replace-with-a-real-secret-key>")
 
 # using HS256 for hashing
 ALGORITHM = "HS256"
